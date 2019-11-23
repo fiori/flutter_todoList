@@ -21,7 +21,7 @@ class TodoList extends StatefulWidget {
 class TodoListState extends State<TodoList> {
   List<String> _todoItems = [];
   List<bool> _itemsCheckbox = [];
-
+  bool _isSharing = false;
   void _addTodoItem(String task) {
     //Only add the task if the user actually entered something
     if (task.isNotEmpty) setState(() => _todoItems.add(task));
@@ -31,10 +31,9 @@ class TodoListState extends State<TodoList> {
   Widget _buildTodoList() {
     return ListView.builder(
       itemBuilder: (context, index) {
-        if (index < _todoItems.length) 
-        {
+        if (index < _todoItems.length) {
           _itemsCheckbox.add(false);
-          return _buildTodoItem(_todoItems[index],index);
+          return _buildTodoItem(_todoItems[index], index);
         }
       },
     );
@@ -42,22 +41,39 @@ class TodoListState extends State<TodoList> {
 
   Widget _buildTodoItem(String todoText, int i) {
     var _card = Card(
-      child: Stack(children: <Widget>[
-        ListTile(title: new Text(todoText[0].toUpperCase() + todoText.substring(1), style: TextStyle(color: Colors.white,),),),
-        Checkbox(
-          value: _itemsCheckbox[i],
-          onChanged: (bool x)
-            {
+      child: Stack(
+        children: <Widget>[
+          ListTile(
+            title: new Text(
+              todoText[0].toUpperCase() + todoText.substring(1),
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            onTap: () {
               setState(() {
-                _itemsCheckbox[i] ? _itemsCheckbox[i] = false : _itemsCheckbox[i] = true; 
+                _isSharing ? _isSharing = false : _isSharing = true;
               });
             },
-        ),
+          ),
+          Visibility(
+            child: Checkbox(
+              value: _itemsCheckbox[i],
+              onChanged: (bool x) {
+                setState(() {
+                  _itemsCheckbox[i]
+                      ? _itemsCheckbox[i] = false
+                      : _itemsCheckbox[i] = true;
+                });
+              },
+            ),
+            visible: _isSharing,
+          ),
         ],
         alignment: Alignment.centerRight,
-        ),
+      ),
       color: Colors.deepPurpleAccent,
-     );
+    );
     return _card;
   }
 
@@ -70,11 +86,45 @@ class TodoListState extends State<TodoList> {
     );
     var _scafold = Scaffold(
       appBar: AppBar(
-        title: Text('Todo List'),
-        leading: Icon(Icons.face),
+        title: Text('Proppy'),
+        centerTitle: true,
+        leading: Icon(Icons.list),
+        actions: <Widget>[
+          Container(
+            padding: EdgeInsets.only(right: 15),
+            child: Icon(Icons.notifications),
+          ),
+        ],
+      ),
+      bottomNavigationBar: Visibility(
+        visible: _isSharing,
+        child: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+              backgroundColor: Colors.blue,
+              icon: Icon(Icons.clear),
+              title: Text('Clear'),
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Colors.blue,
+              icon: Icon(Icons.share),
+              title: Text('Share'),
+            ),
+          ],
+          backgroundColor: Colors.blue,
+          fixedColor: Colors.white,
+          unselectedItemColor: Colors.white,
+          onTap: (int x){
+            setState(() {
+              x == 0 ? _isSharing = false : _isSharing = true; 
+              //insert here sharing plugin
+            });
+          },
+        ),
       ),
       body: _buildTodoList(),
       floatingActionButton: _button,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
 
     return _scafold;
@@ -103,4 +153,4 @@ class TodoListState extends State<TodoList> {
     }));
   }
 }
-  // String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+// String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
