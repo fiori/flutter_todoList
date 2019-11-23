@@ -1,0 +1,132 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'My NotePad',
+        theme: ThemeData(primaryColor: Colors.red),
+        home: MyNotePad(title: "My First NotePad"));
+  }
+}
+
+class MyNotePad extends StatefulWidget {
+  MyNotePad({Key key, this.title});
+
+  final String title;
+
+  @override
+  _MyNotePadState createState() => _MyNotePadState();
+}
+
+class _MyNotePadState extends State<MyNotePad> {
+  final items = [];
+  @override
+  Widget build(BuildContext context) {
+
+    var _FloatingBtn = FloatingActionButton.extended(
+        icon: Icon(Icons.add),
+        label: Text('Add'),
+        backgroundColor: Colors.pink,
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => InsertNotes()));
+        },
+      );
+    var _body = Center(
+          child: ListView(
+        children: <Widget>[],
+      ));
+    var _appBar = AppBar(
+        title: Text(widget.title),
+      );
+    var _build = Scaffold(
+      appBar:_appBar,
+      floatingActionButton: _FloatingBtn, 
+      body:_body,
+    );
+
+    return _build;
+  }
+
+  addNote(String note) {
+    var noteWidget = Card(
+        child: ListTile(
+      title: Text(note),
+    ));
+    this.items.add(noteWidget);
+  }
+
+  noteListBuilder(String note) {
+    // final items = [];
+
+    return ListView.builder(
+      itemCount: this.items.length,
+      itemBuilder: (context, index) {
+        final item = this.items[index];
+
+        return item;
+      },
+    );
+  }
+}
+
+class InsertNotes extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: new AppBar(
+          title: new Text('Add Note'),
+        ),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: <Color>[
+                              Color(0xFF0D47A1),
+                              Color(0xFF1976D2),
+                              Color(0xFF42A5F5),
+                            ],
+                          ),
+                        ),
+                        child: RaisedButton(
+                          child: Text('Submit'),
+                          onPressed: () {
+                            // Validate returns true if the form is valid, or false
+                            // otherwise.
+                            if (_formKey.currentState.validate()) {
+                              // If the form is valid, display a Snackbar.
+                              Scaffold.of(context).showSnackBar(
+                                  SnackBar(content: Text('Processing Data')));
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+}
