@@ -52,7 +52,7 @@ class TodoListState extends State<TodoList> {
             ),
             onTap: () {
               setState(() {
-                _isSharing ? _isSharing = false : _isSharing = true;
+                _isSharing ? null : _isSharing = true;
               });
             },
           ),
@@ -116,7 +116,13 @@ class TodoListState extends State<TodoList> {
           unselectedItemColor: Colors.white,
           onTap: (int x){
             setState(() {
-              x == 0 ? _isSharing = false : _isSharing = true; 
+              if(x == 0)
+              {
+                _isSharing = false;
+                for (x = 0; x < _itemsCheckbox.length; x++) {
+                  _itemsCheckbox[x] = false;
+                }
+              }
               //insert here sharing plugin
             });
           },
