@@ -1,16 +1,9 @@
-# flutter_faro
+# TODO LIST
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+A flutter app that allows you to add notes. 
+<div style="table">
+  <img style="table-cell" src="https://i.ibb.co/MDGnd5N/intro.png" alt="intro" border="0" width="400">
+  <img style="table-cell" src="https://i.ibb.co/vDK7TN8/list-view.png" alt="list-view" border="0" width="400">
+  <img style="table-cell" src="https://i.ibb.co/J5rRZb1/new-task.png" alt="new-task" border="0" width="400">
+  <img style="table-cell" src="https://i.ibb.co/TrNW8NK/Share-and-Clear-Selection.png" alt="Share-and-Clear-Selection" border="0" width="400">
+</div>
