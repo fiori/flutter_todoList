@@ -86,7 +86,7 @@ class TodoListState extends State<TodoList> {
     );
     var _scafold = Scaffold(
       appBar: AppBar(
-        title: Text('Proppy'),
+        title: Text('Todo List'),
         centerTitle: true,
         leading: Icon(Icons.list),
         actions: <Widget>[
@@ -114,10 +114,9 @@ class TodoListState extends State<TodoList> {
           backgroundColor: Colors.blue,
           fixedColor: Colors.white,
           unselectedItemColor: Colors.white,
-          onTap: (int x){
+          onTap: (int x) {
             setState(() {
-              if(x == 0)
-              {
+              if (x == 0) {
                 _isSharing = false;
                 for (x = 0; x < _itemsCheckbox.length; x++) {
                   _itemsCheckbox[x] = false;
